@@ -1,0 +1,50 @@
+{
+  "name": "fcp-audit-publisher",
+  "version": "0.1.0",
+  "description": "An library to validate and/or publish FCP Audit events to the FCP Audit service.",
+  "main": "./dist/index.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "build": "tsup",
+    "test": "npm run build && vitest run --coverage",
+    "test:watch": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/defra/fcp-audit-publisher.git"
+  },
+  "keywords": [
+    "fcp-audit-publisher",
+    "defra",
+    "fcp",
+    "audit"
+  ],
+  "author": "Defra DDTS",
+  "contributors": [
+    "John Watson <john.watson1@defra.gov.uk>"
+  ],
+  "license": "OGL-UK-3.0",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/defra/fcp-audit-publisher/issues"
+  },
+  "homepage": "https://github.com/defra/fcp-audit-publisher#readme",
+  "devDependencies": {
+    "@vitest/coverage-v8": "4.0.16",
+    "eslint": "9.39.2",
+    "neostandard": "0.12.2",
+    "tsup": "8.5.0",
+    "vitest": "4.0.16"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sns": "3.1036.0",
+    "joi": "^17.0.0"
+  }
+}
