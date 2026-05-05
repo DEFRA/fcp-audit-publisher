@@ -1,9 +1,9 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_fcp-audit-publisher&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=johnwatson484_fcp-audit-publisher)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_fcp-audit-publisher&metric=bugs)](https://sonarcloud.io/summary/new_code?id=johnwatson484_fcp-audit-publisher)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_fcp-audit-publisher&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=johnwatson484_fcp-audit-publisher)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_fcp-audit-publisher&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=johnwatson484_fcp-audit-publisher)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_fcp-audit-publisher&metric=coverage)](https://sonarcloud.io/summary/new_code?id=johnwatson484_fcp-audit-publisher)
-[![Known Vulnerabilities](https://snyk.io/test/github/johnwatson484/fcp-audit-publisher/badge.svg)](https://snyk.io/test/github/johnwatson484/fcp-audit-publisher)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=defra_fcp-audit-publisher&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=defra_fcp-audit-publisher)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=defra_fcp-audit-publisher&metric=bugs)](https://sonarcloud.io/summary/new_code?id=defra_fcp-audit-publisher)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=defra_fcp-audit-publisher&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=defra_fcp-audit-publisher)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=defra_fcp-audit-publisher&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=defra_fcp-audit-publisher)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=defra_fcp-audit-publisher&metric=coverage)](https://sonarcloud.io/summary/new_code?id=defra_fcp-audit-publisher)
+[![Known Vulnerabilities](https://snyk.io/test/github/defra/fcp-audit-publisher/badge.svg)](https://snyk.io/test/github/defra/fcp-audit-publisher)
 
 # FCP Audit Publisher
 
