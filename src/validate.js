@@ -1,7 +1,7 @@
-import schema from './schema.js'
+import { eventSchema } from './schema.js'
 
 export function validateAuditEvent (event) {
-  const { error, value } = schema.validate(event, { abortEarly: false })
+  const { error, value } = eventSchema.validate(event, { abortEarly: false })
 
   if (error) {
     return {

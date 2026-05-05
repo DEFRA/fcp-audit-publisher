@@ -76,7 +76,14 @@ On failure:
 
 Applies defaults, validates the event, then publishes it to an AWS SNS topic.
 
+The caller is responsible for constructing and reusing an `SNSClient`.
+
 ```js
+import { SNSClient } from '@aws-sdk/client-sns'
+import { publishAuditEvent } from '@defra/fcp-audit-publisher'
+
+const snsClient = new SNSClient({ region: 'eu-west-2' })
+
 const result = await publishAuditEvent(
   {
     audit: {
@@ -85,8 +92,8 @@ const result = await publishAuditEvent(
     security: null
   },
   {
-    sns: { topicArn: 'arn:aws:sns:eu-west-2:123456789012:fcp-audit' },
-    aws: { region: 'eu-west-2' },
+    snsClient,
+    sns: { topicArn: 'arn:aws:sns:eu-west-2:123456789012:your-sns' },
     application: 'FCP001',
     component: 'my-service',
     environment: 'prod',
@@ -98,17 +105,14 @@ const result = await publishAuditEvent(
 console.log(result.messageId)
 ```
 
-Throws an `Error` if the event is invalid after defaults are applied.
+Throws an `Error` if the config is invalid or if the event is invalid after defaults are applied.
 
 ### Config reference
 
 | Option | Type | Required | Description |
 |---|---|---|---|
+| `snsClient` | `SNSClient` | Yes | A pre-constructed AWS SDK `SNSClient` instance. The caller owns its lifecycle |
 | `sns.topicArn` | string | Yes | ARN of the SNS topic to publish to |
-| `aws.region` | string | Yes | AWS region |
-| `aws.endpoint` | string | No | Custom AWS endpoint URL (e.g. for local Floci) |
-| `aws.accessKeyId` | string | No | AWS access key ID (required when `endpoint` is set) |
-| `aws.secretAccessKey` | string | No | AWS secret access key (required when `endpoint` is set) |
 | `version` | string | No | Default event schema version. Overridden by the event's own `version` field |
 | `application` | string | No | Default application name. Overridden by the event's own `application` field |
 | `component` | string | No | Default component name. Overridden by the event's own `component` field |

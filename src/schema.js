@@ -2,7 +2,7 @@ import Joi from 'joi'
 
 const accountId = Joi.alternatives().try(Joi.string().max(50), Joi.number()).custom(String)
 
-const schema = Joi.object({
+export const eventSchema = Joi.object({
   user: Joi.string().max(50).allow(''),
   sessionid: Joi.string().max(50).allow(''),
   correlationid: Joi.string().max(50).required(),
@@ -48,4 +48,15 @@ const schema = Joi.object({
   'object.missingAuditOrSecurity': 'at least one of "audit" or "security" must be provided and not null'
 })
 
-export default schema
+export const configSchema = Joi.object({
+  snsClient: Joi.object().required(),
+  sns: Joi.object({
+    topicArn: Joi.string().required()
+  }).required(),
+  version: Joi.string().max(10),
+  generateCorrelationId: Joi.boolean(),
+  application: Joi.string().max(30),
+  component: Joi.string().max(30),
+  environment: Joi.string().max(20),
+  ip: Joi.string().max(20)
+}).required()

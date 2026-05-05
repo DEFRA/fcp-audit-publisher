@@ -4,19 +4,16 @@ import { publishAuditEvent } from '../src/publish.js'
 const mockSend = vi.hoisted(() => vi.fn().mockResolvedValue({ MessageId: 'msg-001' }))
 
 vi.mock('@aws-sdk/client-sns', () => ({
-  SNSClient: vi.fn(function () {
-    this.send = mockSend
-  }),
   PublishCommand: vi.fn(function (input) {
     Object.assign(this, input)
   })
 }))
 
-const { SNSClient, PublishCommand } = await import('@aws-sdk/client-sns')
+const { PublishCommand } = await import('@aws-sdk/client-sns')
 
 const baseConfig = {
-  sns: { topicArn: 'arn:aws:sns:eu-west-2:000000000000:fcp-audit' },
-  aws: { region: 'eu-west-2' }
+  snsClient: { send: mockSend },
+  sns: { topicArn: 'arn:aws:sns:eu-west-2:000000000000:fcp-audit' }
 }
 
 const validEvent = {
@@ -162,30 +159,13 @@ describe('publishAuditEvent', () => {
       expect(result).toEqual({ messageId: 'msg-001' })
     })
 
-    test('creates SNSClient with region', async () => {
+    test('calls send on provided snsClient', async () => {
       await publishAuditEvent(validEvent, baseConfig)
-      expect(SNSClient).toHaveBeenCalledWith(expect.objectContaining({ region: 'eu-west-2' }))
-    })
-
-    test('creates SNSClient with endpoint credentials when endpoint provided', async () => {
-      const config = {
-        ...baseConfig,
-        aws: {
-          region: 'eu-west-2',
-          endpoint: 'http://localhost:4566',
-          accessKeyId: 'test',
-          secretAccessKey: 'test'
-        }
-      }
-      await publishAuditEvent(validEvent, config)
-      expect(SNSClient).toHaveBeenCalledWith(expect.objectContaining({
-        endpoint: 'http://localhost:4566',
-        credentials: { accessKeyId: 'test', secretAccessKey: 'test' }
-      }))
+      expect(mockSend).toHaveBeenCalledTimes(1)
     })
   })
 
-  describe('validation', () => {
+  describe('event validation', () => {
     test('throws when event is invalid after defaults applied', async () => {
       await expect(
         publishAuditEvent({ correlationid: 'abc' }, baseConfig)
@@ -196,6 +176,28 @@ describe('publishAuditEvent', () => {
       await expect(
         publishAuditEvent({ correlationid: 'abc' }, baseConfig)
       ).rejects.toThrow(/environment/)
+    })
+  })
+
+  describe('config validation', () => {
+    test('throws when snsClient is missing', async () => {
+      const { snsClient: _, ...configWithout } = baseConfig
+      await expect(
+        publishAuditEvent(validEvent, configWithout)
+      ).rejects.toThrow('Invalid config')
+    })
+
+    test('throws when sns is missing', async () => {
+      const { sns: _, ...configWithout } = baseConfig
+      await expect(
+        publishAuditEvent(validEvent, configWithout)
+      ).rejects.toThrow('Invalid config')
+    })
+
+    test('throws when sns.topicArn is missing', async () => {
+      await expect(
+        publishAuditEvent(validEvent, { ...baseConfig, sns: {} })
+      ).rejects.toThrow('Invalid config')
     })
   })
 })

@@ -1,6 +1,7 @@
 import crypto from 'node:crypto'
-import { PublishCommand, SNSClient } from '@aws-sdk/client-sns'
+import { PublishCommand } from '@aws-sdk/client-sns'
 import { validateAuditEvent } from './validate.js'
+import { configSchema } from './schema.js'
 
 const DEFAULT_VERSION = '1.0.0'
 
@@ -19,6 +20,12 @@ function applyDefaults (event, config) {
 }
 
 export async function publishAuditEvent (event, config) {
+  const { error: configError } = configSchema.validate(config, { abortEarly: false })
+
+  if (configError) {
+    throw new Error(`Invalid config: ${configError.details.map(d => d.message).join(', ')}`)
+  }
+
   const merged = applyDefaults(event, config)
 
   const { valid, errors } = validateAuditEvent(merged)
@@ -27,18 +34,7 @@ export async function publishAuditEvent (event, config) {
     throw new Error(`Invalid audit event: ${errors.join(', ')}`)
   }
 
-  const { aws, sns } = config
-
-  const snsClient = new SNSClient({
-    region: aws.region,
-    ...(aws.endpoint && {
-      endpoint: aws.endpoint,
-      credentials: {
-        accessKeyId: aws.accessKeyId,
-        secretAccessKey: aws.secretAccessKey
-      }
-    })
-  })
+  const { snsClient, sns } = config
 
   const result = await snsClient.send(
     new PublishCommand({
