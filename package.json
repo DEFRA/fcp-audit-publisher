@@ -1,6 +1,6 @@
 {
   "name": "@defra/fcp-audit-publisher",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "description": "An library to validate and/or publish FCP Audit events to the FCP Audit service.",
   "main": "./dist/index.cjs",
   "exports": {
