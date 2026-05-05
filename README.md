@@ -20,13 +20,13 @@ npm install fcp-audit-publisher
 ### ESM
 
 ```js
-import { validateAuditEvent, publishAuditEvent } from 'fcp-audit-publisher'
+import { validateAuditEvent, publishAuditEvent } from '@defra/fcp-audit-publisher'
 ```
 
 ### CommonJS
 
 ```js
-const { validateAuditEvent, publishAuditEvent } = require('fcp-audit-publisher')
+const { validateAuditEvent, publishAuditEvent } = require('@defra/fcp-audit-publisher')
 ```
 
 ---
