@@ -5,37 +5,17 @@ import { validateAuditEvent } from './validate.js'
 const DEFAULT_VERSION = '1.0.0'
 
 function applyDefaults (event, config) {
-  const merged = { ...event }
-
-  if (!merged.datetime) {
-    merged.datetime = new Date().toISOString()
+  const defaults = {
+    datetime: new Date().toISOString(),
+    version: config.version ?? DEFAULT_VERSION,
+    ...(config.generateCorrelationId && { correlationid: crypto.randomUUID() }),
+    ...(config.application && { application: config.application }),
+    ...(config.component && { component: config.component }),
+    ...(config.environment && { environment: config.environment }),
+    ...(config.ip && { ip: config.ip })
   }
 
-  if (config.generateCorrelationId && !merged.correlationid) {
-    merged.correlationid = crypto.randomUUID()
-  }
-
-  if (!merged.version) {
-    merged.version = config.version ?? DEFAULT_VERSION
-  }
-
-  if (!merged.application && config.application) {
-    merged.application = config.application
-  }
-
-  if (!merged.component && config.component) {
-    merged.component = config.component
-  }
-
-  if (!merged.environment && config.environment) {
-    merged.environment = config.environment
-  }
-
-  if (!merged.ip && config.ip) {
-    merged.ip = config.ip
-  }
-
-  return merged
+  return { ...defaults, ...event }
 }
 
 export async function publishAuditEvent (event, config) {
