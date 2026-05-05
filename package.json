@@ -44,7 +44,7 @@
     "vitest": "4.0.16"
   },
   "dependencies": {
-    "joi": "17.0.0"
+    "joi": "18.1.2"
   },
   "peerDependencies": {
     "@aws-sdk/client-sns": ">=3"
