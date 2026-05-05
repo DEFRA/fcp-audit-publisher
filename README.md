@@ -3,6 +3,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=defra_fcp-audit-publisher&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=defra_fcp-audit-publisher)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=defra_fcp-audit-publisher&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=defra_fcp-audit-publisher)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=defra_fcp-audit-publisher&metric=coverage)](https://sonarcloud.io/summary/new_code?id=defra_fcp-audit-publisher)
+[![Dependabot](https://img.shields.io/badge/dependabot-enabled-025E8C?logo=dependabot)](https://github.com/DEFRA/fcp-audit-publisher/blob/main/.github/dependabot.yml)
 
 # FCP Audit Publisher
 
