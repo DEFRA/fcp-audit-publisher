@@ -1,0 +1,61 @@
+name: Check Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+jobs:
+  pr-validator:
+    name: Run Pull Request Checks
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Get package version
+        id: package-version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Get base branch version
+        id: base-version
+        run: |
+          git fetch origin main --depth=1
+          echo "version=$(git show origin/main:package.json | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8')).version")" >> $GITHUB_OUTPUT
+
+      - name: Check version incremented
+        run: |
+          PR_VERSION="${{ steps.package-version.outputs.version }}"
+          BASE_VERSION="${{ steps.base-version.outputs.version }}"
+          node -e "
+            const [a, b] = ['$PR_VERSION', '$BASE_VERSION'].map(v => v.split('.').map(Number));
+            const isGreater = a[0] > b[0] || (a[0] === b[0] && a[1] > b[1]) || (a[0] === b[0] && a[1] === b[1] && a[2] > b[2]);
+            if (!isGreater) {
+              console.error('::error::Version in package.json ($PR_VERSION) must be greater than the base branch version ($BASE_VERSION)');
+              process.exit(1);
+            }
+          "
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+
+      - name: SonarQube Cloud Scan
+        if: github.actor != 'dependabot[bot]'
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          comment-summary-in-pr: always
