@@ -139,6 +139,18 @@ For fields that can be defaulted, the order of precedence from lowest to highest
 
 ---
 
+## `eventSchema`
+
+The raw Joi schema used internally by `validateAuditEvent`, exported for the `fcp-audit` service only.
+
+```js
+import { eventSchema } from '@defra/fcp-audit-publisher'
+```
+
+Other consumers should not import or depend on this directly — use `validateAuditEvent`/`publishAuditEvent` instead.
+
+---
+
 ## Event schema
 
 All events must satisfy the following schema (validated via Joi):
