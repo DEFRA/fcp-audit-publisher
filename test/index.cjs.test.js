@@ -12,6 +12,11 @@ describe('fcp-audit-publisher (CommonJS)', () => {
     expect(typeof cjs.publishAuditEvent).toBe('function')
   })
 
+  test('exports eventSchema', () => {
+    expect(cjs.eventSchema).toBeDefined()
+    expect(typeof cjs.eventSchema.validate).toBe('function')
+  })
+
   test('validateAuditEvent returns valid:true for a valid event', () => {
     const event = {
       correlationid: 'abc-123',
