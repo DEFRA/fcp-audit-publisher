@@ -1,0 +1,11 @@
+{
+  "files.autoSave": "onFocusChange",
+  "editor.codeActions.triggerOnFocusChange": true,
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports.ts": "explicit",
+    "source.organizeImports": "explicit",
+    "source.removeUnusedImports": "explicit",
+    "source.fixAll.eslint": "always",
+    "source.sortImports": "explicit"
+  }
+}
