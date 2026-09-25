@@ -140,4 +140,5 @@ vite.config.ts.timestamp-*
 
 coverage/
 
-.vscode
+.vscode/**/*
+!.vscode/settings.json
