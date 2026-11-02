@@ -1,6 +1,6 @@
 {
   "name": "@defra/fcp-audit-publisher",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A library to validate and/or publish FCP Audit events to the FCP Audit service.",
   "main": "./dist/index.cjs",
   "exports": {
@@ -38,15 +38,18 @@
   "homepage": "https://github.com/DEFRA/fcp-audit-publisher#readme",
   "devDependencies": {
     "@vitest/coverage-v8": "4.1.12",
-    "eslint": "9.39.2",
-    "neostandard": "0.12.2",
+    "eslint": "10.13.0",
+    "neostandard": "0.14.1",
     "tsup": "8.5.0",
     "vitest": "4.1.12"
   },
   "dependencies": {
-    "joi": "18.2.9"
+    "joi": "18.3.1"
   },
   "peerDependencies": {
     "@aws-sdk/client-sns": ">=3"
+  },
+  "overrides": {
+    "minimatch": "11.0.3"
   }
 }
