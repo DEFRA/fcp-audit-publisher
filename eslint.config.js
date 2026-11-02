@@ -1,5 +1,6 @@
-import neostandard from 'neostandard'
+import { neostandard, resolveIgnoresFromGitignore } from 'neostandard'
 
-export default neostandard({
-  ignores: ['dist/**']
-})
+export default [
+  { ignores: [...resolveIgnoresFromGitignore(), 'dist/**'] },
+  ...neostandard()
+]
