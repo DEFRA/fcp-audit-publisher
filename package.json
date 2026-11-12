@@ -1,6 +1,6 @@
 {
   "name": "@defra/fcp-audit-publisher",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "A library to validate and/or publish FCP Audit events to the FCP Audit service.",
   "main": "./dist/index.cjs",
   "exports": {
@@ -14,7 +14,10 @@
     "lint:fix": "eslint --fix",
     "build": "tsup",
     "test": "npm run build && vitest run --coverage",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepare": "npm run setup:husky",
+    "setup:husky": "node -e \"try { (await import('husky')).default() } catch (e) { if (e.code !== 'ERR_MODULE_NOT_FOUND') throw e }\" --input-type module",
+    "check:synthetic-ids": "sfd-id-check --staged"
   },
   "repository": {
     "type": "git",
@@ -39,6 +42,8 @@
   "devDependencies": {
     "@vitest/coverage-v8": "4.1.12",
     "eslint": "10.13.0",
+    "fcp-sfd-core": "github:DEFRA/fcp-sfd-core#95f58ade56b2d0dd0f15bdcba6a5f37a54bcc939",
+    "husky": "9.1.7",
     "neostandard": "0.14.1",
     "tsup": "8.5.0",
     "vitest": "4.1.12"
